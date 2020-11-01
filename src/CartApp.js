@@ -1,6 +1,5 @@
 import { CartItem }from './Components/CartItem';
 import { Cart }  from './Components/Cart';
-import { v4 as uuidv4 } from 'uuid';
 
 const item1 = new CartItem('True', 'Thriller', 35, 5);
 const item2 = new CartItem('Vaery', 'Comedy', 50);

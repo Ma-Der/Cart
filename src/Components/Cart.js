@@ -59,7 +59,7 @@ export class Cart {
             
             Product ${index + 1}
 
-            id: ${item.uuid}
+            id: ${item.id}
             name: ${item.name}
             category: ${item.category}
             price: ${item.price}
