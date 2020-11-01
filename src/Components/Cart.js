@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 import { Validation } from './Validation';
 
 
@@ -13,7 +13,7 @@ export class Cart {
         noDiscount: 0
       }
 
-      this.id = uuidv4();
+      this.uuid = uuidv4();
       this.discountCode = discountCode;
 
       if(Object.keys(discountCodes).find(key => discountCode === key)) {
@@ -35,14 +35,14 @@ export class Cart {
    
     deleteItem(cartItem) {
       Validation.validateCartItem(cartItem);
-      const result = this.cartList.filter(item => item.id !== cartItem.id ? item : null);
+      const result = this.cartList.filter(item => item.uuid !== cartItem.uuid ? item : null);
       this.cartList = result;
     }
    
     changeItemAmount(cartItem, amount) {
       Validation.validateCartItem(cartItem);
       Validation.validateAmount(amount);
-      const result = this.cartList.filter(item => item.id === cartItem.id);
+      const result = this.cartList.filter(item => item.uuid === cartItem.uuid);
       const [ item ] = result;
       item.amount = amount;
     }
@@ -59,7 +59,7 @@ export class Cart {
             
             Product ${index + 1}
 
-            id: ${item.id}
+            id: ${item.uuid}
             name: ${item.name}
             category: ${item.category}
             price: ${item.price}

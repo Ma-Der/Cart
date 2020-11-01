@@ -1,9 +1,9 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 import { Validation } from'./Validation';
 
 export class CartItem {
     constructor(name, category, price, discount = 0) {
-      this.id = uuidv4();
+      this.uuid = uuidv4();
       this.name = name;
       this.category = category;
       this.price = price - (price * discount / 100);

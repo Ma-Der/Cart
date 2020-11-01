@@ -6,9 +6,9 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",
   },
-  mode: "development",
+  mode: "production",
   devtool: "source-map",
-  watch: true,
+  watch: false,
   module: {
     rules: [{
         test: /\.js$/,
