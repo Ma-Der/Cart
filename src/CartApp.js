@@ -1,13 +1,15 @@
-import { CartItem }from './Components/CartItem';
-import { Cart }  from './Components/Cart';
+import { CartItem }from './Components/CartItem.js';
+import { Cart }  from './Components/Cart.js';
 
-const item1 = new CartItem('True', 'Thriller', 35, 5);
-const item2 = new CartItem('Vaery', 'Comedy', 50);
-const cart1 = new Cart('midreader');
+const wrench = new CartItem('16th', 'tool', 2, 5);
+const bluePaint = new CartItem('Blueish', 'paint', 10);
 
-cart1.addItem(item1, 5);
-cart1.addItem(item2, 15);
-//cart1.addItem({id: 3}, 6);
-//cart1.deleteItem(item1);
-cart1.changeItemAmount(item2 ,20);
+const cart1 = new Cart();
+
+cart1.addItem(wrench, 5);
+cart1.addItem(bluePaint, 15);
+cart1.discounts('bestre');
+//cart1.deleteItem(bluePaint);
+cart1.changeAmount(bluePaint , 0);
+cart1.discounts('midbestreader');
 cart1.showCart();

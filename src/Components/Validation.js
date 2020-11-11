@@ -1,21 +1,20 @@
-import { CartItem } from'./CartItem';
+import { CartItem } from'./CartItem.js';
+
 
 export class Validation {
     constructor() {}
-    static validateCartItem(item) {
-        if(!(item instanceof CartItem)) throw new Error("Argument must be a CartItem object.");
+    static isInstanceValid(item, Class) {
+        if(!(item instanceof Class)) throw new Error("Argument must be a " + Class + " object.");
     }
-    static validateAmount(amount) {
-        if(!(typeof amount === 'number')) throw new Error("Argument must be a number.");
-        if(isNaN(amount)) throw new Error("Argument must be a number.");
-        if(amount < 0) throw new Error("Argument must be greater or equal to zero.");
-    }
-    static validateString(str) {
+    static isStringValid(str) {
         if(!(typeof str === 'string')) throw new Error("Argument must be a string.");
         if(str.length === 0) throw new Error("Empty string.")
     }
-    static validateNumber(num) {
+    static isNumberValid(num) {
         if(!(typeof num === 'number' && !isNaN(num))) throw new Error("Argument should be a number.");
-        if(!(num >= 0)) throw new Error("Argument should be more than zero.");
+        if(!(num >= 0)) throw new Error("Argument should be more or equal to zero.");
     }
+    static isInstanceExistsInList(instance, list) {
+        return list.some(item => instance.id === item.id);
+      }
 };

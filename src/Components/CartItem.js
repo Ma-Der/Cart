@@ -1,8 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Validation } from'./Validation';
+import { Validation } from'./Validation.js';
 
 export class CartItem {
     constructor(name, category, price, discount = 0) {
+      Validation.isStringValid(name);
+      Validation.isStringValid(category);
+      Validation.isNumberValid(price);
+      Validation.isNumberValid(discount);
       this.uuid = uuidv4();
       this.name = name;
       this.category = category;
@@ -11,22 +15,22 @@ export class CartItem {
     }
    
     modifyPrice(price) {
-      Validation.validateNumber(price);
+      Validation.isNumberValid(price);
       this.price = price;
     }
    
     modifyName(name) {
-      Validation.validateString(name);
+      Validation.isStringValid(name);
       this.name = name;
     }
    
     modifyDiscount(discount) {
-      Validation.validateNumber(price);
+      Validation.isNumberValid(price);
       this.discount = discount;
     }
    
     addCategory(category) {
-      Validation.validateString(category);
+      Validation.isStringValid(category);
       this.category = category;
     }
   };
