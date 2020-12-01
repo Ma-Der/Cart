@@ -9,9 +9,10 @@ export class OrderItem {
         this.amount = amount;
     }
 
-    changeItemAmount(cartItem, amount) {
-        Validation.isInstanceValid(cartItem, CartItem);
+    changeQuantity(amount) {
+
         Validation.isNumberValid(amount);
-        if((this.item.uuid === cartItem.uuid))  this.amount = amount;        
+        this.amount = amount;        
+
     }
 }

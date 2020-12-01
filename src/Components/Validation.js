@@ -15,6 +15,11 @@ export class Validation {
         if(!(num >= 0)) throw new Error("Argument should be more or equal to zero.");
     }
     static isInstanceExistsInList(instance, list) {
-        return list.some(item => instance.id === item.id);
+        
+        return list.some(element => instance.uuid === element.item.uuid);
       }
+    static isDiscountValid(discount) {
+        this.isNumberValid(discount);
+        if(discount > 100) throw new Error("Discount is a percentage number. Its value needs to be beetween 0 and a 100.");
+    }
 };

@@ -2,51 +2,52 @@ import { v4 as uuidv4 } from 'uuid';
 import { Validation } from './Validation.js';
 import { CartItem } from './CartItem.js';
 import { OrderItem } from './OrderItem.js';
+import { discountCodes } from './discountCodes.js';
+
+
 
 export class Cart {
     constructor() {
       this.uuid = uuidv4();
       this.discount = 0;
-      this.discountCode = this.discounts();
+      this.discountCode = null
       this.cartList = [];
+
+      this.initializeDiscounts()
     }
 
-    discounts(discountCode = 'noDiscount') {
+    initializeDiscounts(discountCode = 'noDiscount') {
       Validation.isStringValid(discountCode);
-      const discountCodes = {
-        bestreader: 30,
-        midbestreader: 25,
-        midreader: 20,
-        newreader: 5,
-        noDiscount: 0
-      }
-      if(Object.keys(discountCodes).find(key => discountCode === key)) {
-        Object.keys(discountCodes).some(key => {
-          if(discountCode === key) {
-            this.discount = discountCodes[key];
-            this.discountCode = key;
-          }
-        });
-      }else { 
-        this.discount = 0;
-        this.discountCode = discountCode;
-      }
+
+      const isDiscountCodeExist = Object.keys(discountCodes).find(key => discountCode.toLowerCase() === key.toLowerCase())
+      if(!isDiscountCodeExist) {
+        throw new Error("Wrong discount code.")
+      } 
+
+      Object.keys(discountCodes).forEach(key => {
+        if(discountCode === key) {
+          this.discount = discountCodes[key];
+          this.discountCode = key;
+        }
+      });
     }
 
     addItem(item, amount) {
       Validation.isInstanceValid(item, CartItem);
+      if(Validation.isInstanceExistsInList(item, this.cartList) === true) throw new Error("Item already in cart.");
       Validation.isNumberValid(amount);
-      Validation.isInstanceExistsInList(item, this.cartList);
+      
       const order = new OrderItem(item, amount);
       this.cartList.push(order);
     }
 
     changeAmount(item, amount) {
       Validation.isInstanceValid(item, CartItem);
+      if(Validation.isInstanceExistsInList(item, this.cartList) === false) throw new Error("No item in cart.");
       Validation.isNumberValid(amount);
       if(amount === 0) this.deleteItem(item);
       this.cartList.find(element => {
-        element.changeItemAmount(item, amount);
+        element.item.uuid === item.uuid ? element.changeQuantity(amount) : false;
   
       });
     }
@@ -59,10 +60,11 @@ export class Cart {
     }
    
     cartSummary() {
-      const result = this.cartList.map(el => ((el.item.price * el.amount) - (el.item.price * el.amount * (this.discount/100))));
+      const result = this.cartList.reduce((acc, el) => {
+        return acc += ((el.item.price * el.amount) - (el.item.price * el.amount * (this.discount/100)))
+      }, 0);
       if(result.length === 0) return console.log('Cart empty.');
-      const resolution = result.reduce((acc, el) => acc += el);
-      console.log(`Your cart is worth ${resolution.toFixed(2)} PLN.`);
+      return result;
     }
     
     showCart() {
@@ -80,6 +82,6 @@ export class Cart {
             amount: ${el.amount}
             `)}
         `);
-        this.cartSummary();    
+        console.log(`Price to pay: ${this.cartSummary()} PLN.`);    
     }
   }

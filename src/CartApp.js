@@ -8,8 +8,8 @@ const cart1 = new Cart();
 
 cart1.addItem(wrench, 5);
 cart1.addItem(bluePaint, 15);
-cart1.discounts('bestre');
+cart1.initializeDiscounts('bestReader');
 //cart1.deleteItem(bluePaint);
-cart1.changeAmount(bluePaint , 0);
-cart1.discounts('midbestreader');
+cart1.changeAmount(bluePaint , 1);
+//cart1.discounts('midbestreader');
 cart1.showCart();

@@ -6,7 +6,7 @@ export class CartItem {
       Validation.isStringValid(name);
       Validation.isStringValid(category);
       Validation.isNumberValid(price);
-      Validation.isNumberValid(discount);
+      Validation.isDiscountValid(discount);
       this.uuid = uuidv4();
       this.name = name;
       this.category = category;
@@ -25,7 +25,7 @@ export class CartItem {
     }
    
     modifyDiscount(discount) {
-      Validation.isNumberValid(price);
+      Validation.isDiscountValid(discount);
       this.discount = discount;
     }
    
